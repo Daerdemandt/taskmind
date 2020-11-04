@@ -4,7 +4,7 @@ services:
   nginx:
     image: nginx
     links:
-      - server
+      - back
     ports:
       - "${MAIN_PORT:-9002}:80"
     volumes:
@@ -21,20 +21,21 @@ services:
       - "/webapp/v8-compile-cache-0"
     environment:
       - NODE_ENV
-  server:
-    build: server
-    links:
-      - mongo
+  back:
+    build: ./back
+    command: python -m flask run --host=0.0.0.0
+    volumes:
+      - ./back/:/usr/src/app/
+    ports:
+      - 5000:5000
+    env_file:
+      - .env.dev
     depends_on:
       - mongo
-    volumes:
-      - "./server:/server:rw"
-      - "/server/node_modules"
-    restart: unless-stopped
-    environment:
-      - NODE_ENV
   mongo:
     image: mongo
     volumes:
       - "./persistence/mongo:/data/db"
     restart: unless-stopped
+    env_file:
+      - .env.dev
