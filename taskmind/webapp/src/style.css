@@ -1,0 +1,9 @@
+/*
+	Body padding is necessary when using navbar-fixed-top
+	https://getbootstrap.com/docs/3.3/components/#navbar-fixed-top
+	Make sure that body is padded adequately to navbar's height
+*/
+body {
+	margin-top: 170px
+}
+

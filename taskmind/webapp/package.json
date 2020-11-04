@@ -1,0 +1,33 @@
+{
+  "name": "taskmind",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack --mode development --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Roman Kuzmichev <daerdemandt@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "6.26.3",
+    "babel-loader": "7.1.5",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-react": "6.24.1",
+    "css-loader": "1.0.0",
+    "html-loader": "0.5.5",
+    "html-webpack-plugin": "3.2.0",
+    "react": "16.4.1",
+    "react-dom": "16.4.1",
+    "style-loader": "0.21.0",
+    "webpack": "4.16.2",
+    "webpack-cli": "3.1.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "nprogress": "^0.2.0",
+    "react": "^16.4.1",
+    "react-fontawesome": "^1.6.1"
+  }
+}

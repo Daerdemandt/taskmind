@@ -1,0 +1,12 @@
+static/index.html
+static/main.js
+.env
+
+# Vim stuff
+# swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+
+
