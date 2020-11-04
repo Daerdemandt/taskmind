@@ -1,0 +1,22 @@
+# This file overrides some stuff from docker-compose.yml for testing purposes.
+
+# Mostly it disables unneeded services by specifying /true command (which does
+# nothing) as entrypoint.
+
+# It does not take effect automatically.
+# You can specify it via '-f' flag for docker-compose.
+
+version: '3'
+
+services:
+  server:
+    entrypoint: "npm test"
+  nginx:
+    entrypoint: "true"
+    restart: "no"
+  mongo:
+    entrypoint: "true"
+    restart: "no"
+  webapp:
+    entrypoint: "true"
+    restart: "no"

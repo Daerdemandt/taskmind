@@ -3,6 +3,8 @@ services:
 
   nginx:
     image: nginx
+    links:
+      - server
     ports:
       - "${MAIN_PORT:-9002}:80"
     volumes:
@@ -19,3 +21,20 @@ services:
       - "/webapp/v8-compile-cache-0"
     environment:
       - NODE_ENV
+  server:
+    build: ./server
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    volumes:
+      - "./server:/server:rw"
+      - "/server/node_modules"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV
+  mongo:
+    image: mongo
+    volumes:
+      - "./persistence/mongo:/data/db"
+    restart: unless-stopped

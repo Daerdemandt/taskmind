@@ -10,3 +10,8 @@ static/main.js
 [._]sw[a-p]
 
 
+# output
+./output/*
+
+persistence/
+
