@@ -32,7 +32,18 @@ const treeRenderer = (renderTitle = _.prop('content.title')) => ({data}) => {
         }
         return result;
     };
-    return <Mindmap value={buildMmTree(rootId)}/>;
+    const handleClick = (e) => {
+        const id = _.prop('target.id')(e);
+        if (_.isUndefined(id)) {
+            console.log('Unselected');
+        } else {
+            const nodeId = id.substr(6);
+            console.log('Selected ' + `${nodeId}`);
+
+
+        }
+    };
+    return <div onClick={handleClick}><Mindmap value={buildMmTree(rootId)} onChange={(...pa) => console.log('Changed', ...pa)}/></div>;
 };
 
 const Tree = treeRenderer();
@@ -40,7 +51,7 @@ const Tree = treeRenderer();
 const Main = () => (
     <div>
 		<h1>Hello World!</h1>
-        <Tree data={tree} />
+        <Tree data={tree}/>
     </div>
 );
 
