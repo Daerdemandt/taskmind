@@ -13,7 +13,7 @@ services:
       - "./static:/static:ro"
     restart: unless-stopped
   webapp:
-    build: ./webapp
+    build: webapp
     volumes:
       - "./webapp:/webapp"
       - "./static:/webapp/dist"
@@ -22,7 +22,7 @@ services:
     environment:
       - NODE_ENV
   server:
-    build: ./server
+    build: server
     links:
       - mongo
     depends_on:
