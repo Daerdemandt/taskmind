@@ -2,6 +2,9 @@ import _ from "lodash/fp";
 import ReactDOM from "react-dom";
 import React from "react";
 import { Mindmap } from 'remindjs';
+import { createStore } from 'redux';
+import { Provider } from "react-redux";
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 const tree = [
     {id: 1, parent:null, content:{title: 'this is root'}},
@@ -46,12 +49,22 @@ const treeRenderer = (renderTitle = _.prop('content.title')) => ({data}) => {
     return <div onClick={handleClick}><Mindmap value={buildMmTree(rootId)} onChange={(...pa) => console.log('Changed', ...pa)}/></div>;
 };
 
+
+const reducer = (state={tree:[]}, action) => state;
+const store = createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+
 const Tree = treeRenderer();
 
 const Main = () => (
     <div>
-		<h1>Hello World!</h1>
-        <Tree data={tree}/>
+        <Provider store={store}>
+		    <h1>Hello World!</h1>
+            <Tree data={tree}/>
+        </Provider>
     </div>
 );
 
