@@ -16,6 +16,7 @@ static/main.js
 
 #Python
 venv
+__pycache__
 
 # output
 ./output/*
