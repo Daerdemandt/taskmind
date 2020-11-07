@@ -21,3 +21,5 @@ venv
 ./output/*
 
 persistence/
+
+webapp/node_modules
