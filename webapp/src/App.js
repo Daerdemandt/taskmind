@@ -50,7 +50,32 @@ const treeRenderer = (renderTitle = _.prop('content.title')) => ({parsedTree}) =
 };
 
 
-const reducer = (state={tree:[]}, action) => state;
+const addUniqueId = (node) => (node, node.id = _.uniqueId());
+
+const reducer = (state, action) => {
+    if (action.type == 'LOAD_NODES') {
+        const tree = action.payload;
+        return {tree, parsedTree:parseTree(tree)};
+    }
+    if (action.type == 'ADD_NODES') {
+        //const newNodes = action.payload.map((node) => ({id: _.uniqueId(), ...node}));
+        const newNodes = action.payload.map(addUniqueId);
+        const tree = [...state.tree, ...newNodes];
+        return {tree, parsedTree:parseTree(tree)};
+    }
+    if (action.type == 'UPDATE_NODES') {
+        //const makeUpdater = ([currentValue, newValue]) => _.map((node) => node.id == currentValue.id ? {...node, ...newValue} : node);
+        const makeUpdater = ([currentValue, newValue]) => _.map((node) => node.id == currentValue.id ? _.defaults(node)(newValue) : node);
+        const tree = _.flow(action.payload.map(makeUpdater))(state.tree);
+        return {tree, parsedTree:parseTree(tree)};
+    }
+    if (action.type == 'DELETE_NODES') {
+        const idsToRemove = new Set(action.payload.map(_.prop('id')));
+        const tree = state.tree.filter((node) => ! idsToRemove.has(node.id));
+    }
+    return state;
+
+};
 const store = createStore(
     reducer,
     {parsedTree:parseTree(tree), tree:tree},
