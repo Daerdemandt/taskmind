@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import { Mindmap } from 'remindjs';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 const tree = [
@@ -26,8 +26,8 @@ const mkMmNode = (node, renderTitle) => ({
     children: {attached:[]}
 });
 
-const treeRenderer = (renderTitle = _.prop('content.title')) => ({data}) => {
-    const {nodeById, children, rootId} = parseTree(data);
+const treeRenderer = (renderTitle = _.prop('content.title')) => ({parsedTree}) => {
+    const {nodeById, children, rootId} = parsedTree;
     const buildMmTree = (id) => {
         const result = mkMmNode(nodeById[id], renderTitle);
         if (children[id]) {
@@ -53,17 +53,25 @@ const treeRenderer = (renderTitle = _.prop('content.title')) => ({data}) => {
 const reducer = (state={tree:[]}, action) => state;
 const store = createStore(
     reducer,
+    {parsedTree:parseTree(tree), tree:tree},
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 
 const Tree = treeRenderer();
 
+const getParsedTree = _.prop('parsedTree');
+
+const Notes = () => {
+    const parsedTree = useSelector(getParsedTree);
+    return <Tree parsedTree={parsedTree}/>;
+};
+
 const Main = () => (
     <div>
         <Provider store={store}>
 		    <h1>Hello World!</h1>
-            <Tree data={tree}/>
+            <Notes/>
         </Provider>
     </div>
 );
