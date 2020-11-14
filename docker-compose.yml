@@ -1,6 +1,5 @@
 version: '3'
 services:
-
   nginx:
     image: nginx
     links:
@@ -23,7 +22,7 @@ services:
       - NODE_ENV
   back:
     build: ./back
-    command: python api.py
+    command: python app.py
     volumes:
       - ./back/:/usr/src/app/
     ports:
@@ -34,6 +33,8 @@ services:
       - mongo
   mongo:
     image: mongo
+    ports:
+      - 27017:27017
     volumes:
       - "./persistence/mongo:/data/db"
     restart: unless-stopped
