@@ -25,6 +25,9 @@ module.exports = {
 			}
 		]
 	},
+    watchOptions: {
+        ignored: /node_modules/
+    },
 	plugins: [
 		new HtmlWebPackPlugin({
 			template: "./src/index.html",
